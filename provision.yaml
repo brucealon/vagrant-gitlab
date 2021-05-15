@@ -15,6 +15,7 @@
       - postfix
       - net-tools
       - postgresql-client
+      - tmux
       state: present
       update_cache: yes
   - name: "Get the GitLab installer"
@@ -27,3 +28,15 @@
     apt:
       name: gitlab-ee
       state: present
+  - name: install tmux
+    copy:
+      src: files/tmux.conf
+      dest: /home/vagrant/.tmux.conf
+      owner: vagrant
+      group: vagrant
+      mode: '0644'
+  - name: automatic tmux
+    lineinfile:
+      path: /home/vagrant/.bashrc
+      line: tmux new-session -A -s dev
+      create: yes
