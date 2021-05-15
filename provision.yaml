@@ -1,0 +1,29 @@
+---
+- hosts: all
+  become: yes
+  environment:
+    EXTERNAL_URL: "http://localhost"
+  tasks:
+  - name: "Install required packages"
+    apt:
+      pkg:
+      - curl
+      - openssh-server
+      - ca-certificates
+      - tzdata
+      - perl
+      - postfix
+      - net-tools
+      - postgresql-client
+      state: present
+      update_cache: yes
+  - name: "Get the GitLab installer"
+    get_url:
+      url: https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh
+      dest: /tmp/script.deb.sh
+  - name: "Prepare to Install GitLab"
+    command: bash /tmp/script.deb.sh
+  - name: "Install GitLab"
+    apt:
+      name: gitlab-ee
+      state: present
