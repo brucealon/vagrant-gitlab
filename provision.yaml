@@ -4,7 +4,7 @@
   environment:
     EXTERNAL_URL: "http://localhost"
   tasks:
-  - name: "Install required packages"
+  - name: install required packages
     apt:
       pkg:
       - curl
@@ -18,13 +18,13 @@
       - tmux
       state: present
       update_cache: yes
-  - name: "Get the GitLab installer"
+  - name: get the gitlab installer
     get_url:
       url: https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh
       dest: /tmp/script.deb.sh
-  - name: "Prepare to Install GitLab"
+  - name: prepare to install gitlab
     command: bash /tmp/script.deb.sh
-  - name: "Install GitLab"
+  - name: install gitlab
     apt:
       name: gitlab-ee
       state: present
